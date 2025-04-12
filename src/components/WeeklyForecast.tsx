@@ -2,13 +2,14 @@
 import React from "react";
 import { useWeather } from "@/context/WeatherContext";
 import { Sunrise, Sunset } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const WeeklyForecast: React.FC = () => {
   const { forecastData, weatherData, isCelsius } = useWeather();
 
   if (!forecastData || !weatherData) {
     return (
-      <div className="mt-6 bg-card-bg rounded-3xl p-5 w-full animate-pulse flex items-center justify-center h-[30vh]">
+      <div className="mt-4 sm:mt-6 bg-card-bg rounded-3xl p-5 w-full animate-pulse flex items-center justify-center h-[30vh]">
         <p className="text-text-secondary">Loading forecast data...</p>
       </div>
     );
@@ -56,51 +57,57 @@ const WeeklyForecast: React.FC = () => {
   const minutes = Math.floor((dayLengthMs % (1000 * 60 * 60)) / (1000 * 60));
 
   return (
-    <div className="mt-6 bg-card-bg rounded-3xl p-5 w-full animate-fade-in">
+    <div className="mt-4 sm:mt-6 bg-card-bg rounded-3xl p-3 sm:p-5 w-full animate-fade-in">
       <h2 className="text-lg font-semibold">Week Forecast</h2>
       
-      <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
-        {Object.values(dailyForecasts).slice(0, 5).map((forecast, index) => (
-          <div 
-            key={index} 
-            className="min-w-[120px] bg-tertiary p-3 rounded-xl flex flex-col items-center"
-          >
-            <p className="text-sm">{new Date(forecast.date).toLocaleDateString("en-US", { weekday: "short" })}</p>
-            <img 
-              src={`http://openweathermap.org/img/wn/${forecast.icon}.png`} 
-              alt={forecast.description}
-              className="w-12 h-12"
-            />
-            <div className="text-sm">
-              <span className="font-bold">{Math.round(convertTemp(forecast.temp_max))}</span>
-              <span className="text-text-secondary mx-1">/</span>
-              <span className="text-text-secondary">{Math.round(convertTemp(forecast.temp_min))}</span>
-              <span>{isCelsius ? "°C" : "°F"}</span>
+      <ScrollArea className="w-full pb-2">
+        <div className="flex gap-2 mt-4 min-w-full">
+          {Object.values(dailyForecasts).slice(0, 5).map((forecast, index) => (
+            <div 
+              key={index} 
+              className="min-w-[110px] sm:min-w-[120px] bg-tertiary p-3 rounded-xl flex flex-col items-center"
+            >
+              <p className="text-xs sm:text-sm">{new Date(forecast.date).toLocaleDateString("en-US", { weekday: "short" })}</p>
+              <img 
+                src={`http://openweathermap.org/img/wn/${forecast.icon}.png`} 
+                alt={forecast.description}
+                className="w-10 h-10 sm:w-12 sm:h-12"
+              />
+              <div className="text-xs sm:text-sm">
+                <span className="font-bold">{Math.round(convertTemp(forecast.temp_max))}</span>
+                <span className="text-text-secondary mx-1">/</span>
+                <span className="text-text-secondary">{Math.round(convertTemp(forecast.temp_min))}</span>
+                <span>{isCelsius ? "°C" : "°F"}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </ScrollArea>
+      
+      <div className="mt-4 bg-tertiary p-3 sm:p-4 rounded-lg">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="flex items-center gap-2">
+            <Sunrise size={20} className="text-yellow-400" />
+            <div>
+              <p className="text-xs sm:text-sm text-text-secondary">Sunrise</p>
+              <p className="text-base sm:text-xl font-bold">{formatTime(weatherData.sys.sunrise)}</p>
             </div>
           </div>
-        ))}
-      </div>
-      
-      <div className="mt-4 bg-tertiary p-4 rounded-lg flex gap-5 flex-wrap">
-        <div className="flex items-center gap-2">
-          <Sunrise size={20} className="text-yellow-400" />
-          <div>
-            <p className="text-sm text-text-secondary">Sunrise</p>
-            <p className="text-xl font-bold">{formatTime(weatherData.sys.sunrise)}</p>
+          
+          <div className="flex items-center gap-2">
+            <Sunset size={20} className="text-orange-400" />
+            <div>
+              <p className="text-xs sm:text-sm text-text-secondary">Sunset</p>
+              <p className="text-base sm:text-xl font-bold">{formatTime(weatherData.sys.sunset)}</p>
+            </div>
           </div>
-        </div>
-        
-        <div className="flex items-center gap-2">
-          <Sunset size={20} className="text-orange-400" />
-          <div>
-            <p className="text-sm text-text-secondary">Sunset</p>
-            <p className="text-xl font-bold">{formatTime(weatherData.sys.sunset)}</p>
+          
+          <div className="flex items-center gap-2">
+            <div>
+              <p className="text-xs sm:text-sm text-text-secondary">Length of day</p>
+              <p className="text-base sm:text-xl font-bold">{hours}h {minutes}min</p>
+            </div>
           </div>
-        </div>
-        
-        <div>
-          <p className="text-sm text-text-secondary">Length of day</p>
-          <p className="text-xl font-bold">{hours}h {minutes}min</p>
         </div>
       </div>
     </div>
