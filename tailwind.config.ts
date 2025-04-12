@@ -64,10 +64,22 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				// Custom colors for weather app
-				"app-bg": "#060C1A",
-				"card-bg": "#0E1421",
-				"tertiary": "#1A2533",
-				"text-secondary": "#676B73", 
+				"app-bg": {
+					DEFAULT: "#060C1A",
+					light: "#F5F7FA"
+				},
+				"card-bg": {
+					DEFAULT: "#0E1421",
+					light: "#FFFFFF"
+				},
+				"tertiary": {
+					DEFAULT: "#1A2533",
+					light: "#E8EDF5"
+				},
+				"text-secondary": {
+					DEFAULT: "#676B73", 
+					light: "#64748B"
+				},
 				"brand": "#742BEC"
 			},
 			fontFamily: {

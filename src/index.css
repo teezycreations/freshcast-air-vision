@@ -90,8 +90,36 @@
     @apply border-border;
   }
 
+  html {
+    @apply transition-colors duration-300;
+  }
+
   body {
-    @apply bg-app-bg text-white font-poppins;
+    @apply bg-app-bg text-white font-poppins transition-colors duration-300;
+  }
+
+  .light body {
+    @apply bg-white text-slate-800;
+  }
+
+  .light .bg-app-bg {
+    @apply bg-slate-100;
+  }
+
+  .light .bg-card-bg {
+    @apply bg-white;
+  }
+
+  .light .text-white {
+    @apply text-slate-800;
+  }
+
+  .light .text-text-secondary {
+    @apply text-slate-500;
+  }
+
+  .light .bg-tertiary {
+    @apply bg-slate-200;
   }
 }
 

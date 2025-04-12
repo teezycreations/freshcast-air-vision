@@ -53,6 +53,19 @@ export const WeatherProvider: React.FC<WeatherProviderProps> = ({ children }) =>
   const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
 
   useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      setIsDarkMode(false);
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
+    } else {
+      setIsDarkMode(true);
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    }
+  }, []);
+
+  useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -132,9 +145,11 @@ export const WeatherProvider: React.FC<WeatherProviderProps> = ({ children }) =>
     if (isDarkMode) {
       document.documentElement.classList.add('light');
       document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
     } else {
       document.documentElement.classList.add('dark');
       document.documentElement.classList.remove('light');
+      localStorage.setItem('theme', 'dark');
     }
   };
 
