@@ -1,14 +1,52 @@
-// Update this page (the content is just a fallback if you fail to update the page)
 
-const Index = () => {
+import React from "react";
+import { WeatherProvider } from "@/context/WeatherContext";
+import { useWeather } from "@/context/WeatherContext";
+import Sidebar from "@/components/Sidebar";
+import SearchBar from "@/components/SearchBar";
+import WeatherCard from "@/components/WeatherCard";
+import WeeklyForecast from "@/components/WeeklyForecast";
+import AQICard from "@/components/AQICard";
+import NearbyCities from "@/components/NearbyCities";
+import LoadingScreen from "@/components/LoadingScreen";
+
+const WeatherDashboard: React.FC = () => {
+  const { loading } = useWeather();
+
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <div className="min-h-screen flex">
+      <Sidebar />
+      
+      <div className="flex-1 p-5 overflow-y-auto">
+        <div className="container mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="space-y-6">
+              <SearchBar />
+              <WeatherCard />
+              <WeeklyForecast />
+            </div>
+            
+            <div className="space-y-6">
+              <AQICard />
+              <NearbyCities />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default Index;
+const IndexPage: React.FC = () => {
+  return (
+    <WeatherProvider>
+      <WeatherDashboard />
+    </WeatherProvider>
+  );
+};
+
+export default IndexPage;

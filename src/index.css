@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -35,19 +36,12 @@
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -79,6 +73,7 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -96,6 +91,183 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-app-bg text-white font-poppins;
   }
+}
+
+/* Theme Variables */
+:root {
+  --primary-color: #060C1A;
+  --secondary-color: #0E1421;
+  --tertiary-color: #1A2533;
+  --text-secondary-color: #676B73;
+  --main-text: #fff;
+  --brand-color: #742BEC;
+  --transition-speed: 0.3s;
+}
+
+/* Light theme variables */
+body.light {
+  --primary-color: #ffffff;
+  --secondary-color: #f0f2f5;
+  --tertiary-color: #e4e6eb;
+  --text-secondary-color: #65676b;
+  --main-text: #050505;
+}
+
+/* Theme toggle styles */
+.checkbox {
+  opacity: 0;
+  position: absolute;
+}
+
+.checkbox-label {
+  background-color: var(--tertiary-color);
+  width: 50px;
+  height: 26px;
+  border-radius: 50px;
+  position: relative;
+  padding: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color var(--transition-speed) ease;
+}
+
+.checkbox-label .ball {
+  background-color: var(--main-text);
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  border-radius: 50%;
+  transition: transform var(--transition-speed) ease;
+}
+
+.checkbox:checked + .checkbox-label .ball {
+  transform: translateX(24px);
+}
+
+/* Unit toggle styles */
+.unit-toggle-checkbox {
+  opacity: 0;
+  position: absolute;
+}
+
+.unit-toggle-label {
+  background-color: var(--tertiary-color);
+  width: 60px;
+  height: 30px;
+  border-radius: 50px;
+  position: relative;
+  padding: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.unit-toggle-label .unit-ball {
+  background-color: var(--main-text);
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  border-radius: 50%;
+  transition: transform var(--transition-speed) ease;
+}
+
+.unit-toggle-checkbox:checked + .unit-toggle-label .unit-ball {
+  transform: translateX(30px);
+}
+
+/* Speedometer styles for AQI */
+#speedometer {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  border-top-left-radius: 360px;
+  border-top-right-radius: 360px;
+  overflow: hidden;
+}
+
+.indicator-wrapper {
+  position: absolute;
+  left: 10%;
+  top: 20%;
+  width: 80%;
+  height: 80%;
+  border-top-left-radius: 360px;
+  border-top-right-radius: 360px;
+  z-index: 400;
+}
+
+.indicator-wrapper-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#indicator {
+  position: absolute;
+  width: 4px;
+  height: 50%;
+  background-color: var(--main-text);
+  bottom: 0;
+  transform-origin: bottom center;
+  transition: transform 0.5s ease;
+}
+
+.bar {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-origin: bottom center;
+  opacity: 0.7;
+}
+
+.bar-1 {
+  transform: rotate(-70deg);
+  background-color: #00E400;
+}
+
+.bar-2 {
+  transform: rotate(-35deg);
+  background-color: #FFFF00;
+}
+
+.bar-3 {
+  transform: rotate(0deg);
+  background-color: #FF7E00;
+}
+
+.bar-4 {
+  transform: rotate(35deg);
+  background-color: #FF0000;
+}
+
+.aqi-value {
+  position: absolute;
+  bottom: 20px;
+  color: var(--main-text);
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+  width: 100%;
 }
