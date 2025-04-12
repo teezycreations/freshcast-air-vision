@@ -15,6 +15,7 @@ interface IWeatherContext {
   weatherData: WeatherData | null;
   forecastData: ForecastData | null;
   airQualityData: AirQualityData | null;
+  nearbyCities: WeatherData[];
   nearbyCitiesData: WeatherData[] | null;
   loading: boolean;
   searchCity: (city: string) => void;
@@ -399,6 +400,7 @@ export const WeatherProvider: React.FC<WeatherProviderProps> = ({ children }) =>
     weatherData,
     forecastData,
     airQualityData,
+    nearbyCities: nearbyCitiesData || [],
     nearbyCitiesData,
     loading,
     searchCity,

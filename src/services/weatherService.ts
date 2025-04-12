@@ -1,4 +1,3 @@
-
 const API_KEY = "6453684fd96817bb165fbd7ac20c745b";
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
 
@@ -31,6 +30,7 @@ export interface WeatherData {
     lat: number;
     lon: number;
   };
+  visibility?: number;
 }
 
 export interface ForecastData {

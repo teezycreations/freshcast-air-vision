@@ -6,7 +6,10 @@ import { MapPin } from "lucide-react";
 const NearbyCities: React.FC = () => {
   const { nearbyCities, isCelsius, searchCity } = useWeather();
 
-  if (nearbyCities.length === 0) {
+  // Ensure we're safely checking if nearbyCities is available and has length
+  const hasNearbyCities = Array.isArray(nearbyCities) && nearbyCities.length > 0;
+
+  if (!hasNearbyCities) {
     return (
       <div className="mt-6 animate-pulse">
         <h2 className="tracking-tighter font-medium text-2xl mb-3">Other Cities</h2>
