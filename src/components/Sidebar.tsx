@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useWeather } from "@/context/WeatherContext";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -13,8 +14,7 @@ import {
   User,
   Bell,
   HelpCircle,
-  Info,
-  Menu
+  Info
 } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { 
@@ -28,7 +28,6 @@ import {
 const Sidebar: React.FC = () => {
   const { isDarkMode, toggleDarkMode, openMapView, openForecastView, openAnalyticsView } = useWeather();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isMobile = useIsMobile();
   
   const handleThemeToggle = () => {
@@ -43,61 +42,55 @@ const Sidebar: React.FC = () => {
     }
   };
 
-  // Mobile navbar component
+  // Mobile navbar component with icons
   const MobileNavbar = () => (
     <nav className="fixed top-0 left-0 right-0 z-40 bg-card-bg p-3 flex items-center justify-between lg:hidden">
-      <button 
-        className="p-2 rounded-full bg-tertiary"
-        onClick={() => setIsMobileMenuOpen(true)}
-      >
-        <Menu size={18} />
-      </button>
-      
-      <div className="flex items-center">
-        <div className="w-8 h-8 bg-brand rounded-full flex items-center justify-center">
-          <span className="text-white font-bold text-sm">FC</span>
+      <div className="flex items-center space-x-1">
+        <div className="flex items-center">
+          <div className="w-8 h-8 bg-brand rounded-full flex items-center justify-center mr-2">
+            <span className="text-white font-bold text-sm">FC</span>
+          </div>
+          <span className="text-sm font-medium">Freshcast</span>
         </div>
-        <h2 className="ml-2 text-sm font-medium">Freshcast</h2>
       </div>
       
-      <button 
-        className="p-2 rounded-full bg-tertiary"
-        onClick={() => setIsSettingsOpen(true)}
-      >
-        <Settings size={18} />
-      </button>
+      <div className="flex items-center space-x-5">
+        <button 
+          className="p-2 rounded-full bg-tertiary hover:bg-opacity-80 transition-colors"
+          onClick={() => {}}
+        >
+          <Home size={16} className="text-text-secondary" />
+        </button>
+        
+        <button 
+          className="p-2 rounded-full bg-tertiary hover:bg-opacity-80 transition-colors"
+          onClick={openAnalyticsView}
+        >
+          <PieChart size={16} className="text-text-secondary" />
+        </button>
+        
+        <button 
+          className="p-2 rounded-full bg-tertiary hover:bg-opacity-80 transition-colors"
+          onClick={openMapView}
+        >
+          <MapPin size={16} className="text-text-secondary" />
+        </button>
+        
+        <button 
+          className="p-2 rounded-full bg-tertiary hover:bg-opacity-80 transition-colors"
+          onClick={openForecastView}
+        >
+          <Calendar size={16} className="text-text-secondary" />
+        </button>
+        
+        <button 
+          className="p-2 rounded-full bg-tertiary hover:bg-opacity-80 transition-colors"
+          onClick={() => setIsSettingsOpen(true)}
+        >
+          <Settings size={16} className="text-text-secondary" />
+        </button>
+      </div>
     </nav>
-  );
-  
-  // Mobile menu component
-  const MobileMenu = () => (
-    <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-      <SheetContent side="left" className="bg-card-bg border-tertiary w-[250px]">
-        <div className="flex flex-col h-full">
-          <div className="flex items-center justify-center py-4">
-            <div className="w-12 h-12 bg-brand rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-xl">FC</span>
-            </div>
-            <h2 className="ml-3 text-lg font-medium">Freshcast</h2>
-          </div>
-          
-          <div className="flex-1 flex flex-col gap-3 mt-6">
-            <NavItems />
-          </div>
-          
-          <div className="py-4 border-t border-tertiary mt-auto">
-            <div className="flex items-center justify-between px-4">
-              <span className="text-sm">Dark Theme</span>
-              <Switch 
-                checked={isDarkMode}
-                onCheckedChange={handleThemeToggle}
-                className="data-[state=checked]:bg-brand"
-              />
-            </div>
-          </div>
-        </div>
-      </SheetContent>
-    </Sheet>
   );
   
   // Nav items component to reuse in both desktop and mobile
@@ -137,13 +130,12 @@ const Sidebar: React.FC = () => {
     </>
   );
   
-  // For mobile view, show the navbar and slide-out menu
+  // For mobile view, show the navbar with icons
   if (isMobile) {
     return (
       <>
         <MobileNavbar />
-        <MobileMenu />
-        <div className="pb-14"></div> {/* Space for mobile navbar */}
+        <div className="pb-1"></div> {/* Small space for mobile navbar */}
         
         <Sheet open={isSettingsOpen} onOpenChange={setIsSettingsOpen}>
           <SheetContent side="right" className="bg-card-bg border-tertiary w-[300px]">

@@ -26,10 +26,15 @@ const WeatherDashboard: React.FC = () => {
       
       <div className="flex-1 p-1 sm:p-3 md:p-5 w-full overflow-hidden">
         <ScrollArea className="h-[98vh] hide-scrollbar">
-          <div className="container mx-auto px-1 py-4 sm:py-8">
+          <div className="container mx-auto px-1 py-4 sm:py-8 mt-14 lg:mt-0">
+            {isMobile && (
+              <div className="mb-3">
+                <SearchBar />
+              </div>
+            )}
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-3 sm:gap-6">
               <div className="space-y-3 sm:space-y-6">
-                <SearchBar />
+                {!isMobile && <SearchBar />}
                 <WeatherCard />
                 <WeeklyForecast />
               </div>

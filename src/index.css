@@ -75,6 +75,11 @@
     --card-bg: 261 20% 12%;
     --text-secondary: 220 3% 70%;
   }
+
+  /* Set default body background and text color */
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 
 @layer base {
@@ -83,6 +88,11 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+  
+  /* Hide scrollbar for all elements */
+  ::-webkit-scrollbar {
+    display: none;
   }
 }
 
