@@ -1,7 +1,7 @@
 
 import React from "react";
 import { useWeather } from "@/context/WeatherContext";
-import { formatDate, formatTime, calculateDayLength, convertTemperature } from "@/utils/helpers";
+import { formatDate, formatTime, convertTemperature } from "@/utils/helpers";
 import { Switch } from "@/components/ui/switch";
 
 const WeatherCard: React.FC = () => {
@@ -16,9 +16,6 @@ const WeatherCard: React.FC = () => {
   }
 
   const date = new Date();
-  const dayLength = weatherData?.sys 
-    ? calculateDayLength(weatherData.sys.sunrise, weatherData.sys.sunset) 
-    : { hours: 0, minutes: 0 };
 
   // Calculate temperature values with proper conversion
   const temp = Math.round(convertTemperature(weatherData.main.temp, isCelsius));
@@ -83,21 +80,6 @@ const WeatherCard: React.FC = () => {
             <h3 className="text-lg sm:text-xl font-semibold capitalize">{weatherData.weather[0].description}</h3>
             <p className="text-xs sm:text-sm text-text-secondary">Feels like {feelsLike}°{isCelsius ? 'C' : 'F'}</p>
           </div>
-        </div>
-      </div>
-      
-      <div className="mt-4 grid grid-cols-3 gap-2 sm:gap-4">
-        <div className="bg-tertiary/30 p-2 sm:p-3 rounded-lg">
-          <p className="text-[10px] sm:text-xs text-text-secondary">Sunrise</p>
-          <p className="text-sm sm:text-lg font-semibold">{formatTime(weatherData.sys.sunrise)}</p>
-        </div>
-        <div className="bg-tertiary/30 p-2 sm:p-3 rounded-lg">
-          <p className="text-[10px] sm:text-xs text-text-secondary">Sunset</p>
-          <p className="text-sm sm:text-lg font-semibold">{formatTime(weatherData.sys.sunset)}</p>
-        </div>
-        <div className="bg-tertiary/30 p-2 sm:p-3 rounded-lg">
-          <p className="text-[10px] sm:text-xs text-text-secondary">Day Length</p>
-          <p className="text-sm sm:text-lg font-semibold">{dayLength.hours}h {dayLength.minutes}min</p>
         </div>
       </div>
     </div>

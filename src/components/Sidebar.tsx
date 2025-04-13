@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useWeather } from "@/context/WeatherContext";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -44,15 +43,36 @@ const Sidebar: React.FC = () => {
     }
   };
 
+  // Mobile navbar component
+  const MobileNavbar = () => (
+    <nav className="fixed top-0 left-0 right-0 z-40 bg-card-bg p-3 flex items-center justify-between lg:hidden">
+      <button 
+        className="p-2 rounded-full bg-tertiary"
+        onClick={() => setIsMobileMenuOpen(true)}
+      >
+        <Menu size={18} />
+      </button>
+      
+      <div className="flex items-center">
+        <div className="w-8 h-8 bg-brand rounded-full flex items-center justify-center">
+          <span className="text-white font-bold text-sm">FC</span>
+        </div>
+        <h2 className="ml-2 text-sm font-medium">Freshcast</h2>
+      </div>
+      
+      <button 
+        className="p-2 rounded-full bg-tertiary"
+        onClick={() => setIsSettingsOpen(true)}
+      >
+        <Settings size={18} />
+      </button>
+    </nav>
+  );
+  
   // Mobile menu component
   const MobileMenu = () => (
     <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-      <SheetTrigger asChild className="fixed top-4 left-4 z-50 lg:hidden">
-        <button className="p-2 rounded-full bg-card-bg">
-          <Menu size={24} />
-        </button>
-      </SheetTrigger>
-      <SheetContent side="left" className="bg-card-bg border-tertiary w-[280px]">
+      <SheetContent side="left" className="bg-card-bg border-tertiary w-[250px]">
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-center py-4">
             <div className="w-12 h-12 bg-brand rounded-full flex items-center justify-center">
@@ -61,7 +81,7 @@ const Sidebar: React.FC = () => {
             <h2 className="ml-3 text-lg font-medium">Freshcast</h2>
           </div>
           
-          <div className="flex-1 flex flex-col gap-6 mt-6">
+          <div className="flex-1 flex flex-col gap-3 mt-6">
             <NavItems />
           </div>
           
@@ -85,53 +105,48 @@ const Sidebar: React.FC = () => {
     <>
       <a className="cursor-pointer group flex items-center gap-3 px-4 py-3 hover:bg-tertiary rounded-lg transition-colors">
         <Home 
-          size={24} 
+          size={isMobile ? 20 : 24} 
           className="text-text-secondary group-hover:text-brand transition-colors" 
         />
-        {isMobile && <span>Home</span>}
+        <span className="text-sm">Home</span>
       </a>
 
       <a className="cursor-pointer group flex items-center gap-3 px-4 py-3 hover:bg-tertiary rounded-lg transition-colors" onClick={openAnalyticsView}>
         <PieChart 
-          size={24} 
+          size={isMobile ? 20 : 24} 
           className="text-text-secondary group-hover:text-brand transition-colors" 
         />
-        {isMobile && <span>Analytics</span>}
+        <span className="text-sm">Analytics</span>
       </a>
 
       <a className="cursor-pointer group flex items-center gap-3 px-4 py-3 hover:bg-tertiary rounded-lg transition-colors" onClick={openMapView}>
         <MapPin 
-          size={24} 
+          size={isMobile ? 20 : 24} 
           className="text-text-secondary group-hover:text-brand transition-colors" 
         />
-        {isMobile && <span>Map</span>}
+        <span className="text-sm">Map</span>
       </a>
 
       <a className="cursor-pointer group flex items-center gap-3 px-4 py-3 hover:bg-tertiary rounded-lg transition-colors" onClick={openForecastView}>
         <Calendar 
-          size={24} 
+          size={isMobile ? 20 : 24} 
           className="text-text-secondary group-hover:text-brand transition-colors" 
         />
-        {isMobile && <span>Forecast</span>}
-      </a>
-
-      <a className="cursor-pointer group flex items-center gap-3 px-4 py-3 hover:bg-tertiary rounded-lg transition-colors" onClick={() => setIsSettingsOpen(true)}>
-        <Settings 
-          size={24} 
-          className="text-text-secondary group-hover:text-brand transition-colors" 
-        />
-        {isMobile && <span>Settings</span>}
+        <span className="text-sm">Forecast</span>
       </a>
     </>
   );
   
-  // For mobile view, show the hamburger menu
+  // For mobile view, show the navbar and slide-out menu
   if (isMobile) {
     return (
       <>
+        <MobileNavbar />
         <MobileMenu />
+        <div className="pb-14"></div> {/* Space for mobile navbar */}
+        
         <Sheet open={isSettingsOpen} onOpenChange={setIsSettingsOpen}>
-          <SheetContent side="right" className="bg-card-bg border-tertiary w-[300px] sm:w-[400px]">
+          <SheetContent side="right" className="bg-card-bg border-tertiary w-[300px]">
             <SheetHeader>
               <SheetTitle className="text-xl">Settings</SheetTitle>
             </SheetHeader>

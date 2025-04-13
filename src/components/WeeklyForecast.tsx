@@ -15,10 +15,15 @@ const WeeklyForecast: React.FC = () => {
     );
   }
 
-  // Process forecast data to get daily forecasts
+  // Process forecast data to get daily forecasts (6 days excluding today)
   const dailyForecasts: Record<string, any> = {};
+  const today = new Date().toLocaleDateString();
+  
   forecastData.list.forEach(item => {
     const date = new Date(item.dt * 1000).toLocaleDateString();
+    
+    // Skip today's forecast
+    if (date === today) return;
     
     if (!dailyForecasts[date]) {
       dailyForecasts[date] = {
@@ -60,18 +65,18 @@ const WeeklyForecast: React.FC = () => {
     <div className="mt-4 sm:mt-6 bg-card-bg rounded-3xl p-3 sm:p-5 w-full animate-fade-in">
       <h2 className="text-lg font-semibold">Week Forecast</h2>
       
-      <ScrollArea className="w-full pb-2">
+      <ScrollArea className="w-full pb-2 hide-scrollbar">
         <div className="flex gap-2 mt-4 min-w-full">
-          {Object.values(dailyForecasts).slice(0, 5).map((forecast, index) => (
+          {Object.values(dailyForecasts).slice(0, 6).map((forecast, index) => (
             <div 
               key={index} 
-              className="min-w-[110px] sm:min-w-[120px] bg-tertiary p-3 rounded-xl flex flex-col items-center"
+              className="min-w-[100px] h-[130px] sm:min-w-[110px] bg-tertiary p-3 rounded-xl flex flex-col items-center justify-between"
             >
               <p className="text-xs sm:text-sm">{new Date(forecast.date).toLocaleDateString("en-US", { weekday: "short" })}</p>
               <img 
                 src={`http://openweathermap.org/img/wn/${forecast.icon}.png`} 
                 alt={forecast.description}
-                className="w-10 h-10 sm:w-12 sm:h-12"
+                className="w-10 h-10"
               />
               <div className="text-xs sm:text-sm">
                 <span className="font-bold">{Math.round(convertTemp(forecast.temp_max))}</span>
@@ -85,27 +90,27 @@ const WeeklyForecast: React.FC = () => {
       </ScrollArea>
       
       <div className="mt-4 bg-tertiary p-3 sm:p-4 rounded-lg">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="flex items-center gap-2">
-            <Sunrise size={20} className="text-yellow-400" />
+        <div className="grid grid-cols-3 gap-2 sm:gap-4">
+          <div className="flex items-center gap-1 sm:gap-2">
+            <Sunrise size={16} className="text-yellow-400 sm:size-20" />
             <div>
-              <p className="text-xs sm:text-sm text-text-secondary">Sunrise</p>
-              <p className="text-base sm:text-xl font-bold">{formatTime(weatherData.sys.sunrise)}</p>
+              <p className="text-[10px] sm:text-sm text-text-secondary">Sunrise</p>
+              <p className="text-xs sm:text-xl font-bold">{formatTime(weatherData.sys.sunrise)}</p>
             </div>
           </div>
           
-          <div className="flex items-center gap-2">
-            <Sunset size={20} className="text-orange-400" />
+          <div className="flex items-center gap-1 sm:gap-2">
+            <Sunset size={16} className="text-orange-400 sm:size-20" />
             <div>
-              <p className="text-xs sm:text-sm text-text-secondary">Sunset</p>
-              <p className="text-base sm:text-xl font-bold">{formatTime(weatherData.sys.sunset)}</p>
+              <p className="text-[10px] sm:text-sm text-text-secondary">Sunset</p>
+              <p className="text-xs sm:text-xl font-bold">{formatTime(weatherData.sys.sunset)}</p>
             </div>
           </div>
           
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
             <div>
-              <p className="text-xs sm:text-sm text-text-secondary">Length of day</p>
-              <p className="text-base sm:text-xl font-bold">{hours}h {minutes}min</p>
+              <p className="text-[10px] sm:text-sm text-text-secondary">Length of day</p>
+              <p className="text-xs sm:text-xl font-bold">{hours}h {minutes}min</p>
             </div>
           </div>
         </div>
